@@ -1,20 +1,19 @@
 name: Publish
-
 on:
   push:
-    branch:
-      - "main"
+    branches:
+      - "master"
 
-concurrency: ${{github.workflow}}-${{ github.ref}}
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
-      - with:
-        version: 7
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -26,6 +25,6 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm run release
-      - env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
