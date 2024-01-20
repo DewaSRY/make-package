@@ -1,5 +1,6 @@
 name: CI
-out:
+
+on:
   push:
     branch:
       - "**"
